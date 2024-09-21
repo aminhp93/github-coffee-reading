@@ -1,0 +1,42 @@
+{
+  "name": "github-coffee-template",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "dev": "rm -rf .next && NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 3000",
+    "build": "next build",
+    "export": "next export",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky",
+    "prettier-fix": "prettier --write .",
+    "prettier-check": "prettier --check ."
+  },
+  "dependencies": {
+    "@module-federation/nextjs-mf": "^8.4.13",
+    "@module-federation/utilities": "^3.1.6",
+    "next": "14.2.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "webpack": "^5.94.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.6",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.7",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.4.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
