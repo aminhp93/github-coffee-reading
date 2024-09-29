@@ -1,5 +1,9 @@
+import dynamic from "next/dynamic";
+
+const Home = dynamic(() => import("@/features/home"));
+
 const HomePage = () => {
-  return <div>Home page</div>;
+  return <Home />;
 };
 
 export default HomePage;

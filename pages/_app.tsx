@@ -1,28 +1,55 @@
 import "@/styles/globals.css";
 
 // Import packages
-
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
+import {
+  SupabaseAuthProvider,
+  useAuth,
+  AuthUserContext,
+} from "@/@core/context/SupabaseContext";
 
-import dynamic from "next/dynamic";
+const AppWithAuth = (props: {
+  Component: NextPage;
+  pageProps: AppProps["pageProps"];
+}) => {
+  const { authUser, signInWithOAuth }: AuthUserContext = useAuth();
 
-// dynamic import for layout
-const Layout = dynamic(() => import("./_layout"), {
-  ssr: false,
-});
+  return (
+    <App {...props} authUser={authUser} signInWithOAuth={signInWithOAuth} />
+  );
+};
 
 const App = (props: {
   Component: NextPage;
   pageProps: AppProps["pageProps"];
+  authUser: AuthUserContext["authUser"];
+  signInWithOAuth: AuthUserContext["signInWithOAuth"];
 }) => {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, authUser, signInWithOAuth } = props;
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      {!authUser?.email ? (
+        <div>
+          <div onClick={signInWithOAuth}>Login</div>
+        </div>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
   );
 };
 
-export default App;
+const AppWrapper = (props: {
+  Component: NextPage;
+  pageProps: AppProps["pageProps"];
+}) => {
+  return (
+    <SupabaseAuthProvider>
+      <AppWithAuth {...props} />
+    </SupabaseAuthProvider>
+  );
+};
+
+export default AppWrapper;
